@@ -1,0 +1,42 @@
+; InstallSimple project
+
+[Setup]
+WindowTitle=SparkleShare 3.2.8 Custom Build - For Harvest Iasi
+ProductName=SparkleShare 3.2.8
+
+[Graphics]
+SplashScreen=
+SplashScreenDelay=1
+Header=
+HeaderJustify=Right
+HeaderFontColor=0
+WizardBitmap=
+WizardFontColor=0
+
+[FirstMessage]
+
+[LastMessage]
+Thank you for using our software.
+
+[LicenseAgreement]
+
+[SetupFiles]
+SourceFolder=C:\Users\Raedok\Desktop\sshare_git\SparkleShare\bin
+SpecialFolder=Program Files
+SetupPath=SparkleShare 3.2.8
+SetupFile=C:\Users\Raedok\Desktop\SparkleShare Installer.exe
+
+[Shortcuts]
+ProgramGroup=
+SparkleShare.Windows.exe=dsm
+
+[Registry]
+
+[Requirements]
+OperatingSystem=0
+NetFramework=0
+NetFrameworkLink=http://www.microsoft.com/en-us/download/details.aspx?id=17718
+AdminRights=1
+
+[AfterInstalling]
+Reboot=0
