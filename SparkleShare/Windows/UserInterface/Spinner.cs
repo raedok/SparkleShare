@@ -36,7 +36,7 @@ namespace SparkleShare {
                 return;
             }
             
-            Width  = size;
+            /*Width  = size;
             Height = size;
 
             int current_frame            = 0;
@@ -58,20 +58,20 @@ namespace SparkleShare {
                         i++;
                     }
                 }
-            }
+            }*/
 
             this.timer = new Timer () {
-                Interval = 400 / frame_count
+                Interval = 400// / frame_count
             };
 
             this.timer.Elapsed += delegate {
                 Dispatcher.BeginInvoke ((Action) delegate {
-                    if (current_frame < frame_count - 1)
+                    /*if (current_frame < frame_count - 1)
                         current_frame++;
                     else
                         current_frame = 0;
                     
-                    Source = frames [current_frame].Source;
+                    Source = frames [current_frame].Source;*/
                 });
             };
         }

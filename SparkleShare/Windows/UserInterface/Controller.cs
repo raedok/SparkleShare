@@ -54,8 +54,8 @@ namespace SparkleShare {
 
             Environment.SetEnvironmentVariable ("HOME", Environment.GetFolderPath (Environment.SpecialFolder.UserProfile));
 
-            SSHCommand.SSHPath = Path.Combine (msysgit_path, "usr", "bin");
-            SSHFetcher.SSHKeyScan = Path.Combine (msysgit_path, "usr", "bin", "ssh-keyscan.exe");
+            SSHCommand.SSHPath = Path.Combine (msysgit_path, "bin");
+            SSHFetcher.SSHKeyScan = Path.Combine (msysgit_path, "bin", "ssh-keyscan.exe");
             GitCommand.GitPath = Path.Combine (msysgit_path, "bin", "git.exe");
 
             base.Initialize ();
@@ -191,7 +191,7 @@ namespace SparkleShare {
         }
 
 
-        public override void Quit ()
+        public override void PlatformQuit ()
         {
             base.Quit ();
         }

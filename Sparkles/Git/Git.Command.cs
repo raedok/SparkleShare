@@ -91,7 +91,7 @@ namespace Sparkles.Git {
             if (ExecPath != null)
                 SetEnvironmentVariable ("GIT_EXEC_PATH", ExecPath);
 
-            SetEnvironmentVariable ("GIT_SSH_COMMAND", GIT_SSH_COMMAND);
+            SetEnvironmentVariable ("GIT_SSH_COMMAND", "winpty " + GIT_SSH_COMMAND);
             SetEnvironmentVariable ("GIT_TERMINAL_PROMPT", "0");
 
             // Don't let Git try to read the config options in PREFIX/etc or ~

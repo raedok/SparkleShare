@@ -211,26 +211,6 @@
       <Link>Images\user-icon-default.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Linux\Images\icons\hicolor\document-added-12.png">
-      <Link>Images\document-added-12.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Linux\Images\icons\hicolor\document-deleted-12.png">
-      <Link>Images\document-deleted-12.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Linux\Images\icons\hicolor\document-edited-12.png">
-      <Link>Images\document-edited-12.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Linux\Images\icons\hicolor\document-moved-12.png">
-      <Link>Images\document-moved-12.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Linux\Images\icons\hicolor\process-working-22.png">
-      <Link>Images\process-working-22.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <EmbeddedResource Include="Images\process-syncing-down.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
@@ -314,6 +294,10 @@
       <Link>Images\text-balloon.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <EmbeddedResource Include="Images\document-added-12.png" />
+    <EmbeddedResource Include="Images\document-deleted-12.png" />
+    <EmbeddedResource Include="Images\document-edited-12.png" />
+    <EmbeddedResource Include="Images\document-moved-12.png" />
     <Content Include="Images\sparkleshare-folder.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
