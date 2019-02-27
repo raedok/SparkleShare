@@ -133,7 +133,8 @@ namespace SparkleShare {
 
             this.log_item = new SparkleMenuItem {
                 Header = "Recent changes…",
-                IsEnabled = Controller.RecentEventsItemEnabled
+                IsEnabled = Controller.RecentEventsItemEnabled,
+                Visibility=  Visibility.Collapsed
             };
 
             SparkleMenuItem link_code_item = new SparkleMenuItem {

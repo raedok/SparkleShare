@@ -562,7 +562,7 @@ namespace SparkleShare {
             if (string.IsNullOrEmpty (backend))
                 backend = BaseFetcher.GetBackend (info.Address);
 
-            info.TargetDirectory = Path.Combine (Config.TmpPath, canonical_name);
+            info.TargetDirectory = Path.Combine (Config.TmpPath, Guid.NewGuid().ToString());
 
             if (Directory.Exists (info.TargetDirectory))
                 Directory.Delete (info.TargetDirectory, recursive: true);
@@ -593,7 +593,7 @@ namespace SparkleShare {
         void FetcherFinishedDelegate (StorageType storage_type, string [] warnings)
         {
             if (storage_type == StorageType.Unknown) {
-                ShowSetupWindow (PageType.StorageSetup);
+                ShowSetupWindowEvent (PageType.StorageSetup);
                 return;
             }
 

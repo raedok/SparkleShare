@@ -57,6 +57,14 @@ namespace SparkleShare {
             SSHCommand.SSHPath = Path.Combine (msysgit_path, "usr", "bin");
             SSHFetcher.SSHKeyScan = Path.Combine(msysgit_path, "usr", "bin", "ssh-keyscan.exe");
             GitCommand.GitPath = Path.Combine(msysgit_path, "bin", "git.exe");
+            var gitLfs = Path.Combine(msysgit_path, "mingw64","bin", "git-lfs.exe");
+            string app_data_path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            if (InstallationInfo.OperatingSystem != OS.Windows && InstallationInfo.OperatingSystem != OS.macOS)
+                app_data_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ".config");
+            string gitLfsDest = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "bin", "git-lfs.exe");
+
+            if (!File.Exists(gitLfsDest))
+                File.Copy(gitLfs, gitLfsDest);
 
             base.Initialize ();
         }
