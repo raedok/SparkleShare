@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sparkleshare>
+  <preset>
+    <info>
+        <onepath>true</onepath>
+        <name>Gitlab SSH Clone</name>
+        <description>Alternative hosted by Harvest Iasi</description>
+        <icon>harvest.png</icon>
+        <backend>Git</backend>
+    </info>
+    <address>
+      <value/>
+      <example>git@gitlab.harvestiasi.ro:group/project</example>
+    </address>
+    <path>
+      <value/>
+      <example></example>
+    </path>
+  </preset>
+</sparkleshare>
+

@@ -92,6 +92,7 @@ namespace Sparkles {
         public SparkleFolder (string name)
         {
             Name = name;
+            if (Name.EndsWith(".git")) Name = Path.GetFileNameWithoutExtension(Name);
         }
     }
 

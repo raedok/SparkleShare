@@ -175,6 +175,109 @@ namespace SparkleShare
                                 break;
                             }
 
+                        case PageType.GitlabSetup:
+                            {
+                                Header = "Setup your Gitlab deployment key!";
+                                Description = "Provide your username and password for the gitlab website you are connecting to.";
+
+                                TextBlock name_label = new TextBlock()
+                                {
+                                    Text = "Username",
+                                    Width = 150,
+                                    TextAlignment = TextAlignment.Right,
+                                    FontWeight = FontWeights.Bold
+                                };
+
+                                TextBox username_box = new TextBox()
+                                {
+                                    Text = "",
+                                    Width = 175
+                                };
+
+                                TextBlock email_label = new TextBlock()
+                                {
+                                    Text = "Password",
+                                    Width = 150,
+                                    TextAlignment = TextAlignment.Right,
+                                    FontWeight = FontWeights.Bold
+                                };
+
+                                PasswordBox password_box = new PasswordBox()
+                                {
+                                    Width = 175
+                                };
+
+
+                                Button cancel_button = new Button()
+                                {
+                                    Content = "Cancel"
+                                };
+
+                                Button continue_button = new Button()
+                                {
+                                    Content = "Continue",
+                                    IsEnabled = false
+                                };
+
+
+                                ContentCanvas.Children.Add(name_label);
+                                Canvas.SetLeft(name_label, 180);
+                                Canvas.SetTop(name_label, 200 + 3);
+
+                                ContentCanvas.Children.Add(username_box);
+                                Canvas.SetLeft(username_box, 340);
+                                Canvas.SetTop(username_box, 200);
+
+                                ContentCanvas.Children.Add(email_label);
+                                Canvas.SetLeft(email_label, 180);
+                                Canvas.SetTop(email_label, 230 + 3);
+
+                                ContentCanvas.Children.Add(password_box);
+                                Canvas.SetLeft(password_box, 340);
+                                Canvas.SetTop(password_box, 230);
+
+                                Buttons.Add(cancel_button);
+                                Buttons.Add(continue_button);
+
+                                Controller.UpdateSetupContinueButtonEvent += delegate (bool enabled)
+                                {
+                                    Dispatcher.BeginInvoke((Action)delegate
+                                    {
+                                        continue_button.IsEnabled = enabled;
+                                    });
+                                };
+
+                                username_box.TextChanged += delegate
+                                {
+                                    Controller.CheckGitlabSetupPage(username_box.Text, password_box.Password);
+                                };
+
+                                password_box.PasswordChanged += delegate
+                                {
+                                    Controller.CheckGitlabSetupPage(username_box.Text, password_box.Password);
+                                };
+
+                                cancel_button.Click += delegate
+                                {
+                                    Dispatcher.BeginInvoke((Action)delegate
+                                    {
+                                        Controller.ResetAdd();
+                                    });
+                                };
+
+                                continue_button.Click += delegate
+                                {
+                                    Controller.GitlabSetupPageCompleted(username_box.Text, password_box.Password);
+                                };
+
+                                if (username_box.Text.Equals(""))
+                                    username_box.Focus();
+                                else
+                                    password_box.Focus();
+
+                                break;
+                            }
+
                         case PageType.Invite:
                             {
                                 Header = "You’ve received an invite!";
@@ -455,15 +558,35 @@ namespace SparkleShare
                                     });
                                 };
 
+                                Action updateConfiguration = () => {
+                                    var preset = Controller.Presets[list_view.SelectedIndex];
+                                    if (preset.OnePath)
+                                    {
+                                        path_label.Visibility = Visibility.Hidden;
+                                        path_box.Visibility = Visibility.Hidden;
+                                        address_box.Width = 420;
+                                    }
+                                    else
+                                    {
+                                        path_label.Visibility = Visibility.Visible;
+                                        path_box.Visibility = Visibility.Visible;
+                                        address_box.Width = 185;
+                                    }
+                                };
+
                                 list_view.SelectionChanged += delegate
                                 {
                                     Controller.SelectedPresetChanged(list_view.SelectedIndex);
+                                    updateConfiguration();
                                 };
 
                                 list_view.KeyDown += delegate
                                 {
                                     Controller.SelectedPresetChanged(list_view.SelectedIndex);
+                                    updateConfiguration();
                                 };
+
+                                updateConfiguration();
 
                                 Controller.CheckAddPage(address_box.Text, path_box.Text, list_view.SelectedIndex);
 

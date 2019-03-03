@@ -134,6 +134,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml" />
@@ -144,6 +145,7 @@
     <Reference Include="System.Xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UserInterface\GitInstall.cs" />
     <Compile Include="UserInterface\About.cs" />
     <Compile Include="UserInterface\Bubbles.cs" />
     <Compile Include="UserInterface\EventLog.cs" />
@@ -235,19 +237,19 @@
   <ItemGroup>
     <None Include="..\Common\Presets\github.png">
       <Link>Presets\github.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Common\Presets\own-server.png">
       <Link>Presets\own-server.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Common\Presets\bitbucket.png">
       <Link>Presets\bitbucket.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Common\Presets\planio.png">
       <Link>Presets\planio.png</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.config" />
     <None Include="packages.config" />
@@ -255,19 +257,19 @@
   <ItemGroup>
     <None Include="..\Common\Presets\bitbucket.xml">
       <Link>Presets\bitbucket.xml</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Common\Presets\github.xml">
       <Link>Presets\github.xml</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Common\Presets\own-server.xml">
       <Link>Presets\own-server.xml</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="..\Common\Presets\planio.xml">
       <Link>Presets\planio.xml</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +300,31 @@
     <EmbeddedResource Include="Images\document-deleted-12.png" />
     <EmbeddedResource Include="Images\document-edited-12.png" />
     <EmbeddedResource Include="Images\document-moved-12.png" />
+    <None Include="..\Common\Presets\gitlab.png">
+      <Link>Presets\gitlab.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Common\Presets\gitlab.xml">
+      <Link>Presets\gitlab.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Common\Presets\harvest.png">
+      <Link>Presets\harvest.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\Common\Presets\harvest.xml">
+      <Link>Presets\harvest.xml</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="7z.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="7z.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="7-zip License.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Content Include="Images\sparkleshare-folder.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

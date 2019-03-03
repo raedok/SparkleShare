@@ -27,79 +27,92 @@ using Forms = System.Windows.Forms;
 using Sparkles;
 using Sparkles.Git;
 
-namespace SparkleShare {
+namespace SparkleShare
+{
 
-    public class Controller : BaseController {
+    public class Controller : BaseController
+    {
 
-        public Controller (Configuration config)
-            : base (config)
+        public Controller(Configuration config)
+            : base(config)
         {
         }
 
 
         public override string PresetsPath
         {
-            get {
-                return Path.Combine (Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location), "Presets");
+            get
+            {
+                return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Presets");
             }
         }
 
 
-        public override void Initialize ()
+        public override void Initialize()
         {
             // Add msysgit to path, as we cannot asume it is added to the path
             // Asume it is installed in @"<exec dir>\msysgit\bin"
-            string executable_path = Path.GetDirectoryName (Forms.Application.ExecutablePath);
-            string msysgit_path    = Path.Combine (executable_path, "msysgit");
-
-            Environment.SetEnvironmentVariable ("HOME", Environment.GetFolderPath (Environment.SpecialFolder.UserProfile));
-
-            SSHCommand.SSHPath = Path.Combine (msysgit_path, "usr", "bin");
-            SSHFetcher.SSHKeyScan = Path.Combine(msysgit_path, "usr", "bin", "ssh-keyscan.exe");
-            GitCommand.GitPath = Path.Combine(msysgit_path, "bin", "git.exe");
-            var gitLfs = Path.Combine(msysgit_path, "mingw64","bin", "git-lfs.exe");
+            string executable_path = Path.GetDirectoryName(Forms.Application.ExecutablePath);
             string app_data_path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             if (InstallationInfo.OperatingSystem != OS.Windows && InstallationInfo.OperatingSystem != OS.macOS)
                 app_data_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ".config");
+            string msysgit_path = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "git");
+
+            Environment.SetEnvironmentVariable("HOME", Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
+
+            SSHCommand.SSHPath = Path.Combine(msysgit_path, "usr", "bin");
+            SSHFetcher.SSHKeyScan = Path.Combine(msysgit_path, "usr", "bin", "ssh-keyscan.exe");
+            GitCommand.GitPath = Path.Combine(msysgit_path, "bin", "git.exe");
+            var gitLfs = Path.Combine(msysgit_path, "mingw32", "bin", "git-lfs.exe");
             string gitLfsDest = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "bin", "git-lfs.exe");
 
             if (!File.Exists(gitLfsDest))
-                File.Copy(gitLfs, gitLfsDest);
-
-            base.Initialize ();
-        }
-
-
-        public override string EventLogHTML {
-            get {
-                string html = UserInterfaceHelpers.GetHTML ("event-log.html");
-                return html.Replace ("<!-- $jquery -->", UserInterfaceHelpers.GetHTML ("jquery.js"));
-            }
-        }
-
-
-        public override string DayEntryHTML {
-            get {
-                return UserInterfaceHelpers.GetHTML ("day-entry.html");
-            }
-        }
-
-
-        public override string EventEntryHTML {
-            get {
-                return UserInterfaceHelpers.GetHTML ("event-entry.html");
-            }
-        }
-
-
-        public override void SetFolderIcon ()
-        {
-            string app_path = Path.GetDirectoryName (Forms.Application.ExecutablePath);
-            string icon_file_path = Path.Combine (app_path, "Images", "sparkleshare-folder.ico");
-
-            if (!File.Exists (icon_file_path))
             {
-                string ini_file_path = Path.Combine (FoldersPath, "desktop.ini");
+                var wnd = new GitInstall(executable_path);
+                wnd.ShowDialog();
+                File.Copy(gitLfs, gitLfsDest);
+            }
+
+            base.Initialize();
+        }
+
+
+        public override string EventLogHTML
+        {
+            get
+            {
+                string html = UserInterfaceHelpers.GetHTML("event-log.html");
+                return html.Replace("<!-- $jquery -->", UserInterfaceHelpers.GetHTML("jquery.js"));
+            }
+        }
+
+
+        public override string DayEntryHTML
+        {
+            get
+            {
+                return UserInterfaceHelpers.GetHTML("day-entry.html");
+            }
+        }
+
+
+        public override string EventEntryHTML
+        {
+            get
+            {
+                return UserInterfaceHelpers.GetHTML("event-entry.html");
+            }
+        }
+
+
+        public override void SetFolderIcon()
+        {
+            string app_path = Path.GetDirectoryName(Forms.Application.ExecutablePath);
+            string icon_file_path = Path.Combine(app_path, "Images", "sparkleshare-folder.ico");
+
+            if (!File.Exists(icon_file_path))
+            {
+                string ini_file_path = Path.Combine(FoldersPath, "desktop.ini");
                 string n = Environment.NewLine;
 
                 string ini_file = "[.ShellClassInfo]" + n +
@@ -109,97 +122,100 @@ namespace SparkleShare {
 
                 try
                 {
-                    File.Create (ini_file_path).Close ();
-                    File.WriteAllText (ini_file_path, ini_file);
+                    File.Create(ini_file_path).Close();
+                    File.WriteAllText(ini_file_path, ini_file);
 
-                    File.SetAttributes (ini_file_path,
-                        File.GetAttributes (ini_file_path) | FileAttributes.Hidden | FileAttributes.System);
+                    File.SetAttributes(ini_file_path,
+                        File.GetAttributes(ini_file_path) | FileAttributes.Hidden | FileAttributes.System);
 
                 }
                 catch (IOException e)
                 {
-                    Logger.LogInfo ("Config", "Failed setting icon for '" + FoldersPath + "': " + e.Message);
+                    Logger.LogInfo("Config", "Failed setting icon for '" + FoldersPath + "': " + e.Message);
                 }
             }
         }
 
 
-        public override void CreateStartupItem ()
+        public override void CreateStartupItem()
         {
-            string startup_folder_path = Environment.GetFolderPath (Environment.SpecialFolder.Startup);
-            string shortcut_path       = Path.Combine (startup_folder_path, "SparkleShare.lnk");
+            string startup_folder_path = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            string shortcut_path = Path.Combine(startup_folder_path, "SparkleShare.lnk");
 
-            if (File.Exists (shortcut_path))
-                File.Delete (shortcut_path);
+            if (File.Exists(shortcut_path))
+                File.Delete(shortcut_path);
 
             string shortcut_target = Forms.Application.ExecutablePath;
 
-            Shortcut shortcut = new Shortcut ();
-            shortcut.Create (shortcut_path, shortcut_target);
+            Shortcut shortcut = new Shortcut();
+            shortcut.Create(shortcut_path, shortcut_target);
         }
-        
 
-        public override void InstallProtocolHandler ()
+
+        public override void InstallProtocolHandler()
         {
             // We ship a separate .exe for this
         }
 
 
-        public void AddToBookmarks ()
+        public void AddToBookmarks()
         {
-            string user_profile_path = Environment.GetFolderPath (Environment.SpecialFolder.UserProfile);
-            string shortcut_path     = Path.Combine (user_profile_path, "Links", "SparkleShare.lnk");
+            string user_profile_path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            string shortcut_path = Path.Combine(user_profile_path, "Links", "SparkleShare.lnk");
 
-            if (File.Exists (shortcut_path))
-                File.Delete (shortcut_path);
+            if (File.Exists(shortcut_path))
+                File.Delete(shortcut_path);
 
-            Shortcut shortcut = new Shortcut ();
-            shortcut.Create (FoldersPath, shortcut_path);
+            Shortcut shortcut = new Shortcut();
+            shortcut.Create(FoldersPath, shortcut_path);
         }
 
 
-        public override void CreateSparkleShareFolder ()
+        public override void CreateSparkleShareFolder()
         {
-            if (!Directory.Exists (FoldersPath))
+            if (!Directory.Exists(FoldersPath))
             {
-                Directory.CreateDirectory (FoldersPath);
+                Directory.CreateDirectory(FoldersPath);
 
-                File.SetAttributes (FoldersPath, File.GetAttributes(FoldersPath) | FileAttributes.System);
-                Logger.LogInfo ("Config", "Created '" + FoldersPath + "'");
+                File.SetAttributes(FoldersPath, File.GetAttributes(FoldersPath) | FileAttributes.System);
+                Logger.LogInfo("Config", "Created '" + FoldersPath + "'");
             }
         }
 
 
-        public override void OpenFile (string path)
+        public override void OpenFile(string path)
         {
-            Process.Start (path);
+            Process.Start(path);
         }
 
 
-        public override void OpenFolder (string path)
+        public override void OpenFolder(string path)
         {
-            Process.Start (path);
+            Process.Start(path);
         }
 
 
-        public override void OpenWebsite (string url)
+        public override void OpenWebsite(string url)
         {
-            Process.Start (new ProcessStartInfo (url));
+            Process.Start(new ProcessStartInfo(url));
         }
 
 
-        public override void CopyToClipboard (string text)
+        public override void CopyToClipboard(string text)
         {
-            try {
-                Clipboard.SetData (DataFormats.Text, text);
-            
-            } catch (COMException e) {
-                Logger.LogInfo ("Controller", "Copy to clipboard failed", e);
+            try
+            {
+                Clipboard.SetData(DataFormats.Text, text);
+
+            }
+            catch (COMException e)
+            {
+                Logger.LogInfo("Controller", "Copy to clipboard failed", e);
             }
         }
 
 
-        public override void PlatformQuit ()
+        public override void PlatformQuit()
         {
             Environment.Exit(0);
         }
