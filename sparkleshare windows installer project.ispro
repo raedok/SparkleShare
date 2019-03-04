@@ -5,12 +5,12 @@ WindowTitle=SparkleShare 3.2.8 Custom Build - For Harvest Iasi
 ProductName=SparkleShare 3.2.8
 
 [Graphics]
-SplashScreen=
+SplashScreen=C:\Users\Raedok\Desktop\sshare_git\SparkleShare\harvest.bmp
 SplashScreenDelay=1
-Header=
+Header=C:\Users\Raedok\Desktop\sshare_git\SparkleShare\harvest.bmp
 HeaderJustify=Right
 HeaderFontColor=0
-WizardBitmap=
+WizardBitmap=C:\Users\Raedok\Desktop\sshare_git\SparkleShare\harvest.bmp
 WizardFontColor=0
 
 [FirstMessage]

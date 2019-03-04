@@ -58,7 +58,7 @@ namespace SparkleShare
                 app_data_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), ".config");
             string msysgit_path = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "git");
 
-            if (!File.Exists(msysgit_path))
+            if (!Directory.Exists(msysgit_path))
             {
                 var wnd = new GitInstall(executable_path);
                 wnd.ShowDialog();
