@@ -363,7 +363,7 @@ namespace SparkleShare
                 }
                 else
                 {
-                    throw new Exception("Invalid address.");
+                    ChangePageEvent(PageType.Add, null);
                 }
             }
 

@@ -426,10 +426,11 @@ namespace SparkleShare
                                     FontWeight = FontWeights.Bold
                                 };
 
+
                                 TextBox address_box = new TextBox()
                                 {
                                     Width = 200,
-                                    Text = Controller.PreviousAddress,
+                                    Text = "",
                                     IsEnabled = (Controller.SelectedPreset.Address == null)
                                 };
 
@@ -450,7 +451,7 @@ namespace SparkleShare
                                 TextBox path_box = new TextBox()
                                 {
                                     Width = 200,
-                                    Text = Controller.PreviousPath,
+                                    Text = "",
                                     IsEnabled = (Controller.SelectedPreset.Path == null)
                                 };
 
@@ -558,7 +559,8 @@ namespace SparkleShare
                                     });
                                 };
 
-                                Action updateConfiguration = () => {
+                                Action updateConfiguration = () =>
+                                {
                                     var preset = Controller.Presets[list_view.SelectedIndex];
                                     if (preset.OnePath)
                                     {
@@ -899,7 +901,8 @@ namespace SparkleShare
                                     layout_radio_buttons.Children.Add(radio_button);
                                     radio_button.GroupName = "storageTypeGroup";
 
-                                    radio_button.Checked += delegate {
+                                    radio_button.Checked += delegate
+                                    {
                                         continue_button.IsEnabled = true;
                                     };
                                 }
