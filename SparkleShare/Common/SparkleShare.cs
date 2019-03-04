@@ -60,6 +60,8 @@ namespace SparkleShare {
         static void OnUnhandledException (object sender, UnhandledExceptionEventArgs exception_args)
         {
             var exception = (Exception) exception_args.ExceptionObject;
+            Console.WriteLine(exception);
+            Console.ReadLine();
             Logger.WriteCrashReport (exception);
         }
     }

@@ -70,7 +70,7 @@ namespace Sparkles
             }
             catch (Exception e)
             {
-                Logger.LogInfo("Cmd", "Couldn't execute command: " + e.Message, e);
+                Logger.LogInfo("Cmd", "Couldn't execute command: " + e.Message + Environment.NewLine + Environment.StackTrace);
                 Environment.Exit(-1);
             }
         }
