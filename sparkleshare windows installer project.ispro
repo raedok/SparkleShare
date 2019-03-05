@@ -21,14 +21,14 @@ Thank you for using our software.
 [LicenseAgreement]
 
 [SetupFiles]
-SourceFolder=C:\Users\Raedok\Desktop\sshare_git\SparkleShare\bin
+SourceFolder=C:\Users\Raedok\Desktop\sshare_git\SparkleShare\bootloader_bin
 SpecialFolder=Program Files
 SetupPath=SparkleShare 3.2.8
-SetupFile=C:\Users\Raedok\Desktop\SparkleShare Installer.exe
+SetupFile=C:\Users\Raedok\Desktop\sshare_git\SparkleShare\SparkleShare Installer.exe
 
 [Shortcuts]
 ProgramGroup=
-SparkleShare.Windows.exe=dsm
+SparkleShare.exe=dm
 
 [Registry]
 

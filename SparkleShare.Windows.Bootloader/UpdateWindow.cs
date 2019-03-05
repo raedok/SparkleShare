@@ -9,25 +9,24 @@ using System.Windows.Media;
 
 namespace SparkleShare
 {
-    public class GitInstall : Window
+    public class UpdateWindow : Window
     {
-
         private ProgressBar progressBar;
         private Label status;
         private string appPath;
 
-        public GitInstall(string appPath)
+        public UpdateWindow(string appPath)
         {
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
             ServicePointManager.Expect100Continue = true;
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            
+
             this.appPath = appPath;
-            Title = "Installing required tools";
+            Title = "New update released. Updating...";
             ResizeMode = ResizeMode.NoResize;
             Height = 288;
             Width = 720;
-            Icon = UserInterfaceHelpers.GetImageSource("sparkleshare-app", "ico");
+            Icon = UserInterfaceBootloaderHelpers.GetImageSource("sparkleshare-app", "ico");
 
             WindowStartupLocation = WindowStartupLocation.CenterScreen;
 
@@ -43,12 +42,12 @@ namespace SparkleShare
                 Height = 260
             };
 
-            image.Source = UserInterfaceHelpers.GetImageSource("about");
+            image.Source = UserInterfaceBootloaderHelpers.GetImageSource("about");
 
 
             this.status = new Label()
             {
-                Content = "Downloading required tools...",
+                Content = "Downloading update...",
                 FontSize = 11,
                 Foreground = new SolidColorBrush(Colors.White)
             };
@@ -83,9 +82,12 @@ namespace SparkleShare
                 client.DownloadProgressChanged += Client_DownloadProgressChanged;
 
                 string app_data_path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-                string toolsExe = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "tmp", "tools.exe");
+                string tmpPath = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "tmp");
+                if (!Directory.Exists(tmpPath)) Directory.CreateDirectory(tmpPath);
 
-                client.DownloadFileAsync(new Uri("https://github.com/git-for-windows/git/releases/download/v2.21.0.windows.1/PortableGit-2.21.0-32-bit.7z.exe"), toolsExe);
+                string destinationFile = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "tmp", "release.7z");
+
+                client.DownloadFileAsync(new Uri("http://share.harvestiasi.ro/sparkleshare/windows/raw/master/release.7z"), destinationFile);
                 client.DownloadFileCompleted += Client_DownloadFileCompleted;
             }).Start();
         }
@@ -94,29 +96,26 @@ namespace SparkleShare
         {
             Dispatcher.Invoke(() =>
             {
-                this.status.Content = "Installing downloaded tools.";
+                this.status.Content = "Installing downloaded update.";
                 this.progressBar.Value = 0;
             });
 
             string app_data_path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string toolsExe = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "tmp", "tools.exe");
-            string gitPath = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "git_tmp");
-            string gitPathCorrect = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "git");
+            string toolsExe = Path.Combine(app_data_path, "org.sparkleshare.SparkleShare", "tmp", "release.7z");
 
             string sevenZip_path = Path.Combine(appPath, "7z.exe");
             var proc = Process.Start(new ProcessStartInfo()
             {
                 FileName = sevenZip_path,
-                Arguments = $"x \"{toolsExe}\" -o\"{gitPath}\" -y -bsp1 -bse1 -bso1",
+                Arguments = $"x \"{toolsExe}\" -o\"{ this.appPath }\" -y -bsp1 -bse1 -bso1",
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 RedirectStandardOutput = true
             });
-            while(!proc.HasExited)
-               readLine(proc.StandardOutput);            
+            while (!proc.HasExited)
+                readLine(proc.StandardOutput);
             proc.WaitForExit();
             File.Delete(toolsExe);
-            Directory.Move(gitPath, gitPathCorrect);
             Dispatcher.Invoke(() =>
             {
                 this.Close();
@@ -126,6 +125,7 @@ namespace SparkleShare
         private void readLine(StreamReader reader)
         {
             var line = reader.ReadLine();
+            Console.WriteLine(line);
             if (!string.IsNullOrWhiteSpace(line) && line.Contains("%") && line.Contains("-"))
             {
                 try

@@ -43,7 +43,9 @@ namespace SparkleShare
         {
             get
             {
-                return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Presets");
+                var assembly = Assembly.GetExecutingAssembly();
+                var directory = Path.GetDirectoryName(assembly.Location);
+                return Path.Combine(directory, "Presets");
             }
         }
 

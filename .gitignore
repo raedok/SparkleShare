@@ -11,10 +11,12 @@
 *.suo
 *.sln.cache
 *.user
+.vs/
 *.resources
 bin/
 build/
 obj/
+release/
 git-*
 Sparkles/InstallationInfo.Directory.cs
 SparkleShare/Linux/sparkleshare
@@ -29,7 +31,8 @@ _ReSharper.*
 *.wxs
 *.dotCover
 SparkleShare/Windows/build/
-
+bootloader_bin/
+SparkleShare.Windows.Bootloader/obj
 # NuGet Packages
 *.nupkg
 # The packages folder can be ignored because of Package Restore

@@ -254,7 +254,6 @@
       <Link>Presets\planio.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +294,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="version.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <Resource Include="..\Common\Images\text-balloon.png">
       <Link>Images\text-balloon.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -319,13 +321,16 @@
       <Link>Presets\harvest.xml</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="7z.dll">
+    <None Include="..\..\SparkleShare.Windows.Bootloader\7-zip License.txt">
+      <Link>7-zip License.txt</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="7z.exe">
+    <None Include="..\..\SparkleShare.Windows.Bootloader\7z.dll">
+      <Link>7z.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="7-zip License.txt">
+    <None Include="..\..\SparkleShare.Windows.Bootloader\7z.exe">
+      <Link>7z.exe</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Content Include="Images\sparkleshare-folder.ico">
@@ -348,4 +353,19 @@
       <Name>Sparkles.Git</Name>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>echo Y | rmdir /s "$(TargetDir)..\staging" &amp;set errorlevel=0
+mkdir "$(TargetDir)..\staging"
+echo Y | rmdir /s "$(TargetDir)..\release" &amp;set errorlevel=0
+mkdir "$(TargetDir)..\release"
+xcopy "$(TargetDir)*" "$(TargetDir)..\staging" /e
+
+echo Y | del  "$(TargetDir)..\staging\7z.dll" &amp;set errorlevel=0
+echo Y | del  "$(TargetDir)..\staging\7z.exe" &amp;set errorlevel=0
+echo Y | del  "$(TargetDir)..\staging\7-zip License.txt" &amp;set errorlevel=0
+
+"$(TargetDir)7z.exe" a "$(TargetDir)..\release\release.7z" "$(TargetDir)..\staging\*"
+xcopy "$(TargetDir)version.txt" "$(TargetDir)..\release"
+echo Y | rmdir /s "$(TargetDir)..\staging" &amp;set errorlevel=0</PostBuildEvent>
+  </PropertyGroup>
 </Project>
