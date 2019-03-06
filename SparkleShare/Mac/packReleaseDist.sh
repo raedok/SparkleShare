@@ -15,5 +15,5 @@ export PATH=/usr/local/bin:/opt/local/bin:/Library/Frameworks/Mono.framework/Ver
 cd ${bundle}/Contents/MonoBundle/
 
 # merge all Assemblies into one Mac binary
-mkbundle --static --deps --config ./config  -o ../MacOS/SparkleShare SparkleShare.exe Sparkles.dll Xamarin.Mac.dll Sparkles.Git.dll
+mkbundle --static --deps --config ./config  -o ../MacOS/SparkleShare.Mac SparkleShare.Mac.exe Sparkles.dll Xamarin.Mac.dll Sparkles.Git.dll
 rm *.dll *.exe
