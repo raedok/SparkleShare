@@ -23,6 +23,7 @@ using AppKit;
 using CoreGraphics;
 using Foundation;
 using WebKit;
+using System.Linq;
 
 using Sparkles;
 
@@ -198,7 +199,7 @@ namespace SparkleShare {
                     Frame       = new CGRect (190, Frame.Height - 336, 196, 22),
                     Enabled     = (Controller.SelectedPreset.Address == null),
                     Delegate    = new SparkleTextFieldDelegate (),
-                    StringValue = "" + Controller.PreviousAddress
+                    StringValue = "" //+ Controller.PreviousAddress
                 };
 
                 AddressTextField.Cell.LineBreakMode = NSLineBreakMode.TruncatingTail;
@@ -212,7 +213,7 @@ namespace SparkleShare {
                     Frame       = new CGRect (190 + 196 + 16, Frame.Height - 336, 196, 22),
                     Enabled     = (Controller.SelectedPreset.Path == null),
                     Delegate    = new SparkleTextFieldDelegate (),
-                    StringValue = "" + Controller.PreviousPath
+                    StringValue = "" //+ Controller.PreviousPath
                 };
 
                 PathTextField.Cell.LineBreakMode = NSLineBreakMode.TruncatingTail;
@@ -225,6 +226,17 @@ namespace SparkleShare {
                 AddressHelpLabel = new SparkleLabel (Controller.SelectedPreset.AddressExample, NSTextAlignment.Left) {
                     TextColor = NSColor.DisabledControlText,
                     Frame     = new CGRect (190, Frame.Height - 358, 204, 19)
+                };
+
+                Action changeStyles = () => {
+                    var preset = Controller.Presets [Controller.SelectedPresetIndex];
+                    if (preset.OnePath) {
+                        PathTextField.Hidden = PathLabel .Hidden = true;
+                        AddressTextField.Frame = new CGRect (190, Frame.Height - 336, 196 + 196 + 16, 22);
+                    } else {
+                        PathTextField.Hidden = PathLabel.Hidden = false;
+                        AddressTextField.Frame = new CGRect (190, Frame.Height - 336, 196, 22);
+                    }
                 };
 
                 if (TableView == null || TableView.RowCount != Controller.Presets.Count) {
@@ -266,14 +278,17 @@ namespace SparkleShare {
 
                     TableView.DataSource = DataSource;
                     TableView.ReloadData ();
-                    
+
                     (TableView.Delegate as SparkleTableViewDelegate).SelectionChanged += delegate {
                         Controller.SelectedPresetChanged ((int) TableView.SelectedRow);
                         Controller.CheckAddPage (AddressTextField.StringValue, PathTextField.StringValue, (int) TableView.SelectedRow);
+                        changeStyles ();
                     };
+
                 }
                 
                 TableView.SelectRow (Controller.SelectedPresetIndex, byExtendingSelection: false);
+                changeStyles ();
                 TableView.ScrollRowToVisible (Controller.SelectedPresetIndex);
                 MakeFirstResponder ((NSResponder) TableView);
 
@@ -685,7 +700,7 @@ namespace SparkleShare {
             this.backing_scale_factor = (int) backing_scale_factor;
 
             int i = 0;
-            foreach (Preset preset in presets) {
+            foreach (Preset preset in presets.OrderBy(p=> (p.Name == "Gitlab SSH Clone") ? 0 : 1)) {
                 Items.Add (preset);
 
                 NSTextFieldCell cell = new NSTextFieldCell ();
