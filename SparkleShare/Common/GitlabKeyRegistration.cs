@@ -11,7 +11,7 @@ namespace SparkleShare
     {
         public static void RegisterKey(string urlRoot, string username, string password, string key)
         {
-            if (urlRoot.IndexOf("://") < 0) urlRoot = "http://" + urlRoot;
+            if (urlRoot.IndexOf("://") < 0) urlRoot = "https://" + urlRoot;
             var cookies = new CookieContainer();
             var loginPage = Get(urlRoot + "/users/sign_in", cookies);
             var token = getAuthenticityToken(loginPage);
