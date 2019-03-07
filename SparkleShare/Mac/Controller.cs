@@ -46,10 +46,8 @@ namespace SparkleShare {
             GitCommand.GitPath  = Path.Combine (NSBundle.MainBundle.ResourcePath, "git", "libexec", "git-core", "git");
             GitCommand.ExecPath = Path.Combine (NSBundle.MainBundle.ResourcePath, "git", "libexec", "git-core");
 
-            if (!File.Exists (Path.Combine (Config.BinPath, "git-lfs"))) {
-                File.Copy (Path.Combine (GitCommand.ExecPath, "git-lfs"),
-                    Path.Combine (Config.BinPath, "git-lfs"));
-            }
+            File.Copy (Path.Combine (GitCommand.ExecPath, "git-lfs"),
+                Path.Combine (Config.BinPath, "git-lfs"), overwrite: true);
         }
 
 

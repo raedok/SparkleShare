@@ -26,7 +26,6 @@ namespace Sparkles.Git
     {
         public static string ExecPath;
 
-
         static string git_path;
 
         public static string GitPath
@@ -106,10 +105,10 @@ namespace Sparkles.Git
             SetEnvironmentVariable("GIT_CONFIG_NOSYSTEM", "1");
             SetEnvironmentVariable("PREFIX", "");
 
-            SetEnvironmentVariable("HOME", "");
-            SetEnvironmentVariable("PATH", "");
+            SetEnvironmentVariable ("HOME", "");
+            SetEnvironmentVariable ("PATH", "");
 
-            SetEnvironmentVariable("LANG", "en_US");
+            SetEnvironmentVariable ("LANG", "en_US");
         }
 
 
