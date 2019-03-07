@@ -84,7 +84,7 @@ namespace SparkleShare {
             };
 
             this.updates = new Label () {
-                Content    = "Checking for updates...",
+                Content    = "Custom Harvest Iași Build",
                 FontSize   = 11,
                 Foreground = new SolidColorBrush (Color.FromArgb (128, 255, 255, 255))
             };
@@ -92,7 +92,7 @@ namespace SparkleShare {
             TextBlock credits = new TextBlock () {
                 FontSize     = 11,
                 Foreground   = new SolidColorBrush (Colors.White),
-                Text         = "Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons and others.\n" +
+                Text         = "Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons, Alexandru Bâgu and others.\n" +
                     "\n" +
                     "SparkleShare is Open Source software. You are free to use, modify, " +
                     "and redistribute it under the GNU General Public License version 3 or later.",

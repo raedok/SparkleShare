@@ -178,7 +178,7 @@ namespace SparkleShare
                         case PageType.GitlabSetup:
                             {
                                 Header = "Setup your Gitlab deployment key!";
-                                Description = "Provide your username and password for the gitlab website you are connecting to.";
+                                Description = "Provide your username and password for the Gitlab website you are connecting to.";
 
                                 TextBlock name_label = new TextBlock()
                                 {
