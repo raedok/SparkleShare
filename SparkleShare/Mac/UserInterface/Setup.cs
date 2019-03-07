@@ -186,6 +186,76 @@ namespace SparkleShare {
                 Buttons.Add (CancelButton);
             }
 
+            if (type == PageType.GitlabSetup) {
+                Header = "Setup your Gitlab deployment key!";
+                Description = "Provide your username and password for the Gitlab website you are connecting to.";
+
+                FullNameLabel = new SparkleLabel ("Username:", NSTextAlignment.Right);
+                FullNameLabel.Frame = new CGRect (165, Frame.Height - 234, 160, 17);
+
+                FullNameTextField = new NSTextField () {
+                    Frame = new CGRect (330, Frame.Height - 238, 196, 22),
+                    StringValue = "",
+                    Delegate = new SparkleTextFieldDelegate ()
+                };
+
+                EmailLabel = new SparkleLabel ("Password:", NSTextAlignment.Right);
+                EmailLabel.Frame = new CGRect (165, Frame.Height - 264, 160, 17);
+
+                EmailTextField = new NSSecureTextField () {
+                    Frame = new CGRect (330, Frame.Height - 268, 196, 22),
+                    Delegate = new SparkleTextFieldDelegate (),
+                    
+                };
+
+                CancelButton = new NSButton () { Title = "Cancel" };
+
+                ContinueButton = new NSButton () {
+                    Title = "Continue",
+                    Enabled = false
+                };
+
+
+                (FullNameTextField.Delegate as SparkleTextFieldDelegate).StringValueChanged += delegate {
+                    Controller.CheckGitlabSetupPage (FullNameTextField.StringValue, EmailTextField.StringValue);
+                };
+
+                (EmailTextField.Delegate as SparkleTextFieldDelegate).StringValueChanged += delegate {
+                    Controller.CheckGitlabSetupPage (FullNameTextField.StringValue, EmailTextField.StringValue);
+                };
+
+                ContinueButton.Activated += delegate {
+                    string username = FullNameTextField.StringValue.Trim ();
+                    string password = EmailTextField.StringValue.Trim ();
+
+                    Controller.GitlabSetupPageCompleted (username, password);
+                };
+
+                CancelButton.Activated += delegate { Controller.SetupPageCancelled (); };
+
+                Controller.UpdateSetupContinueButtonEvent += delegate (bool button_enabled) {
+                    SparkleShare.Controller.Invoke (() => {
+                        ContinueButton.Enabled = button_enabled;
+                    });
+                };
+
+
+                ContentView.AddSubview (FullNameLabel);
+                ContentView.AddSubview (FullNameTextField);
+                ContentView.AddSubview (EmailLabel);
+                ContentView.AddSubview (EmailTextField);
+
+                Buttons.Add (ContinueButton);
+                Buttons.Add (CancelButton);
+
+                Controller.CheckGitlabSetupPage (FullNameTextField.StringValue, EmailTextField.StringValue);
+
+                if (FullNameTextField.StringValue.Equals (""))
+                    MakeFirstResponder ((NSResponder)FullNameTextField);
+                else
+                    MakeFirstResponder ((NSResponder)EmailTextField);
+            }
+
             if (type == PageType.Add) {
                 Header      = "Where’s your project hosted?";
                 Description = "";
@@ -792,8 +862,12 @@ namespace SparkleShare {
                 if (File.Exists (hi_path))
                     image_path = hi_path;
             }
-
-            return new NSImage (image_path) { Size = new CGSize (24, 24) };
+            try {
+                return new NSImage (image_path) { Size = new CGSize (24, 24) };
+            } catch (Exception ex) {
+                Logger.LogInfo ("error","objectValueForTableColumn", ex);
+            }
+            return new NSImage (new CGSize (24, 24));
         }
     }
 

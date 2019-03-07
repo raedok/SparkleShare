@@ -24,7 +24,6 @@ namespace Sparkles.Git
 
     public class GitCommand : SSHCommand
     {
-
         public static string ExecPath;
 
 
@@ -106,6 +105,7 @@ namespace Sparkles.Git
             // Don't let Git try to read the config options in PREFIX/etc or ~
             SetEnvironmentVariable("GIT_CONFIG_NOSYSTEM", "1");
             SetEnvironmentVariable("PREFIX", "");
+
             SetEnvironmentVariable("HOME", "");
             SetEnvironmentVariable("PATH", "");
 

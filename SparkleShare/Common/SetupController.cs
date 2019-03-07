@@ -236,13 +236,13 @@ namespace SparkleShare
         }
 
 
-        public void CheckSetupPage(string full_name, string email)
+        public void CheckSetupPage (string full_name, string email)
         {
-            full_name = full_name.Trim();
-            email = email.Trim();
+            full_name = full_name.Trim ();
+            email = email.Trim ();
 
-            bool fields_valid = (!string.IsNullOrEmpty(full_name) && IsValidEmail(email));
-            UpdateSetupContinueButtonEvent(fields_valid);
+            bool fields_valid = (!string.IsNullOrEmpty (full_name) && IsValidEmail (email));
+            UpdateSetupContinueButtonEvent (fields_valid);
         }
 
         public void CheckGitlabSetupPage(string username, string password)
@@ -258,12 +258,19 @@ namespace SparkleShare
         }
 
 
-        public void SetupPageCompleted(string full_name, string email)
+        public void SetupPageCompleted (string full_name, string email)
         {
-            SparkleShare.Controller.CurrentUser = new User(full_name, email);
-            new Thread(() => SparkleShare.Controller.CreateStartupItem()).Start();
+            SparkleShare.Controller.CurrentUser = new User (full_name, email);
+            new Thread (() => SparkleShare.Controller.CreateStartupItem ()).Start ();
 
-            ResetAdd();
+            ResetAdd ();
+        }
+        public void SetupGitlabCompleted (string username, string password)
+        {
+            SparkleShare.Controller.CurrentUser = new User (username, password);
+            new Thread (() => SparkleShare.Controller.CreateStartupItem ()).Start ();
+
+            ResetAdd ();
         }
 
         public void ResetAdd()

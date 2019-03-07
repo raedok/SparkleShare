@@ -117,7 +117,7 @@ namespace SparkleShare {
             this.folder_item.Image.Size = new CGSize (16, 16);
 
             this.add_item = new NSMenuItem () {
-                Title   = "Sync Remote Project…",
+                Title   = "Add hosted project…",
                 Enabled = true
             };
 
@@ -127,7 +127,7 @@ namespace SparkleShare {
             };
 
             this.link_code_item = new NSMenuItem ();
-            this.link_code_item.Title = "Computer ID";
+            this.link_code_item.Title = "Client ID";
 
             if (Controller.LinkCodeItemEnabled) {
                 this.link_code_submenu = new NSMenu ();
@@ -237,7 +237,7 @@ namespace SparkleShare {
             
             this.submenu = new NSMenu ();
 
-            this.submenu.AddItem (this.recent_events_item);
+            //this.submenu.AddItem (this.recent_events_item);
             this.submenu.AddItem (this.add_item);
             this.submenu.AddItem (NSMenuItem.SeparatorItem);
             this.submenu.AddItem (link_code_item);

@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Web;
+using System.Web.Util;
 
 namespace SparkleShare
 {
@@ -11,6 +12,7 @@ namespace SparkleShare
     {
         public static void RegisterKey(string urlRoot, string username, string password, string key)
         {
+            HttpEncoder.Current = HttpEncoder.Default;
             if (urlRoot.IndexOf("://") < 0) urlRoot = "https://" + urlRoot;
             var cookies = new CookieContainer();
             var loginPage = Get(urlRoot + "/users/sign_in", cookies);

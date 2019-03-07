@@ -45,7 +45,7 @@ namespace SparkleShare {
 
             SparkleShare.Controller.ShowAboutWindowEvent += delegate {
                 ShowWindowEvent ();
-                new Thread (CheckForNewVersion).Start ();
+                //new Thread (CheckForNewVersion).Start ();
             };
         }
 

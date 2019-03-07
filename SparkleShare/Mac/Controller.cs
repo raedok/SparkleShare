@@ -42,15 +42,14 @@ namespace SparkleShare {
         {
             NSApplication.Init ();
 
+            SSHCommand.SSHPath = Command.LocateCommandPath ("ssh");
             GitCommand.GitPath  = Path.Combine (NSBundle.MainBundle.ResourcePath, "git", "libexec", "git-core", "git");
             GitCommand.ExecPath = Path.Combine (NSBundle.MainBundle.ResourcePath, "git", "libexec", "git-core");
 
-            bool overwite = true;
-
-            File.Copy (
-                Path.Combine (GitCommand.ExecPath, "git-lfs"),
-                Path.Combine (Config.BinPath, "git-lfs"),
-                overwite);
+            if (!File.Exists (Path.Combine (Config.BinPath, "git-lfs"))) {
+                File.Copy (Path.Combine (GitCommand.ExecPath, "git-lfs"),
+                    Path.Combine (Config.BinPath, "git-lfs"));
+            }
         }
 
 

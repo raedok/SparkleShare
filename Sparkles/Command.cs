@@ -28,19 +28,19 @@ namespace Sparkles
         bool write_output;
 
 
-        public Command(string path, string args) : this(path, args, write_output: true)
+        public Command (string path, string args) : this (path, args, write_output: true)
         {
         }
 
 
-        public Command(string path, string args, bool write_output)
+        public Command (string path, string args, bool write_output)
         {
             this.write_output = write_output;
 
             StartInfo.FileName = path;
             StartInfo.Arguments = args;
 
-            StartInfo.WorkingDirectory = Path.GetTempPath();
+            StartInfo.WorkingDirectory = Path.GetTempPath ();
             StartInfo.CreateNoWindow = true;
             StartInfo.RedirectStandardOutput = true;
             StartInfo.RedirectStandardError = true;
@@ -50,101 +50,104 @@ namespace Sparkles
         }
 
 
-        new public void Start()
+        new public void Start ()
         {
             string folder = "";
 
-            if (StartInfo.WorkingDirectory != Path.GetTempPath())
-                folder = Path.GetFileName(StartInfo.WorkingDirectory) + " | ";
+            if (StartInfo.WorkingDirectory != Path.GetTempPath ())
+                folder = Path.GetFileName (StartInfo.WorkingDirectory) + " | ";
 
-            if (write_output)
-            {
-                Logger.LogInfo("Cmd", folder + Path.GetFileName(StartInfo.FileName) + " " + StartInfo.Arguments);
-                foreach (var key in StartInfo.EnvironmentVariables.Keys)
-                    Logger.LogInfo("Cmd", key + "=" + StartInfo.EnvironmentVariables[key.ToString()]);
+            if (write_output) {
+                Logger.LogInfo ("Cmd", folder + Path.GetFileName (StartInfo.FileName) + " " + StartInfo.Arguments);
+                //foreach (var key in StartInfo.EnvironmentVariables.Keys)
+                //    Logger.LogInfo ("Cmd", key + "=" + StartInfo.EnvironmentVariables [key.ToString ()]);
             }
 
-            try
-            {
-                base.Start();
-            }
-            catch (Exception e)
-            {
-                Logger.LogInfo("Cmd", "Couldn't execute command: " + e.Message + Environment.NewLine + Environment.StackTrace);
-                Environment.Exit(-1);
+            try {
+                base.Start ();
+            } catch (Exception e) {
+                Logger.LogInfo ("Cmd", "Couldn't execute command: " + e.Message + Environment.NewLine + Environment.StackTrace);
+                Environment.Exit (-1);
             }
         }
 
 
-        public void StartAndWaitForExit()
+        public void StartAndWaitForExit ()
         {
-            Start();
-            WaitForExit();
+            Start ();
+            WaitForExit ();
         }
 
 
-        public string StartAndReadStandardOutput()
+        public string StartAndReadStandardOutput ()
         {
             StartInfo.RedirectStandardError = true;
-            Start();
+            Start ();
 
             // Reading the standard output HAS to go before
             // WaitForExit, or it will hang forever on output > 4096 bytes
-            string output = StandardOutput.ReadToEnd();
-            WaitForExit();
-            var err = StandardError.ReadToEnd();
-            if (!string.IsNullOrEmpty(err))
-            {
-                Logger.LogInfo("Cmd", "Err: " + err);
-            }
+            string output = StandardOutput.ReadToEnd ();
+            WaitForExit ();
+            //var err = StandardError.ReadToEnd ();
+            //if (!string.IsNullOrEmpty (err)) {
+            //    Logger.LogInfo ("Cmd", "Err: " + err);
+            //}
             StartInfo.RedirectStandardError = false;
 
-            return output.TrimEnd();
+            return output.TrimEnd ();
         }
 
 
-        public string StartAndReadStandardError()
+        public string StartAndReadStandardError ()
         {
             StartInfo.RedirectStandardError = true;
-            Start();
+            Start ();
 
             // Reading the standard output HAS to go before
             // WaitForExit, or it will hang forever on output > 4096 bytes
-            string output = StandardError.ReadToEnd();
-            WaitForExit();
+            string output = StandardError.ReadToEnd ();
+            WaitForExit ();
 
             StartInfo.RedirectStandardError = false;
 
-            return output.TrimEnd();
+            return output.TrimEnd ();
         }
 
 
-        public void SetEnvironmentVariable(string variable, string content)
+        public void SetEnvironmentVariable (string variable, string content)
         {
-            if (StartInfo.EnvironmentVariables.ContainsKey(variable))
-                StartInfo.EnvironmentVariables[variable] = content;
+            if (StartInfo.EnvironmentVariables.ContainsKey (variable))
+                StartInfo.EnvironmentVariables [variable] = content;
             else
-                StartInfo.EnvironmentVariables.Add(variable, content);
+                StartInfo.EnvironmentVariables.Add (variable, content);
         }
 
-
-        protected static string LocateCommand(string name)
+        public static string LocateCommandPath (string name)
         {
-            string[] possible_command_paths = {
-                Environment.GetFolderPath (Environment.SpecialFolder.Personal) + "/bin/" + name,
-                InstallationInfo.Directory + "/bin/" + name,
-                "/usr/local/bin/" + name,
-                "/usr/bin/" + name,
-                "/opt/local/bin/" + name
+            var platform = Environment.OSVersion.Platform;
+            bool isUnix = (platform == PlatformID.MacOSX || platform == PlatformID.Unix);
+
+            string [] possible_command_paths = {
+                Path.Combine(Environment.GetFolderPath (Environment.SpecialFolder.Personal), "bin"),
+                isUnix ? Path.Combine(InstallationInfo.Directory,"bin") :"",
+                isUnix ? "/usr/local/bin" : "",
+                isUnix ? "/usr/bin" : "",
+                isUnix ? "/opt/local/bin" : ""
             };
 
-            foreach (string path in possible_command_paths)
-            {
-                if (File.Exists(path))
+            foreach (string path in possible_command_paths) {
+                var filePath = Path.Combine (path, name);
+                if (File.Exists (filePath))
                     return path;
             }
+            return null;
+        }
 
-            return name;
+        public static string LocateCommand (string name)
+        {
+            var path = LocateCommandPath (name);
+            if (string.IsNullOrWhiteSpace (path)) return null;
+            return Path.Combine (path, name);
         }
     }
 }

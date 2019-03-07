@@ -95,14 +95,14 @@ namespace SparkleShare {
                 TextColor       = NSColor.White
             };
 
-            this.updates_text_field = new SparkleLabel ("Checking for updates…", NSTextAlignment.Left) {
+            this.updates_text_field = new SparkleLabel ("Custom Harvest Iași Build", NSTextAlignment.Left) {
                 DrawsBackground = false,
                 Frame           = new CGRect (295, Frame.Height - 232, 318, 98),
                 TextColor       = NSColor.FromCalibratedRgba (1.0f, 1.0f, 1.0f, 0.5f)
             };
 
             this.credits_text_field = new SparkleLabel (
-                @"Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons and others" +
+                @"Copyright © 2010–" + DateTime.Now.Year + " Hylke Bons, Alexandru Bâgu and others" +
                 "\n\n" + 
                 "SparkleShare is Open Source. You are free to use, modify, and redistribute it " +
                 "under the GNU GPLv3", NSTextAlignment.Left) {
