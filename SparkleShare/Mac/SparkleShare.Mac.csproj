@@ -27,9 +27,9 @@
         </Command>
       </CustomCommands>
     </CustomCommands>
-    <EnableCodeSigning>False</EnableCodeSigning>
+    <EnableCodeSigning>true</EnableCodeSigning>
     <CreatePackage>False</CreatePackage>
-    <EnablePackageSigning>False</EnablePackageSigning>
+    <EnablePackageSigning>true</EnablePackageSigning>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <ConsolePause>False</ConsolePause>
     <UseSGen>false</UseSGen>
@@ -40,6 +40,8 @@
     <LinkMode>None</LinkMode>
     <UseMSBuildEngine>True</UseMSBuildEngine>
     <AOTMode>None</AOTMode>
+    <CodeSigningKey>Developer ID Application: BIESSE SOLUTION SRL (VG34VQP9G2)</CodeSigningKey>
+    <PackageSigningKey>Developer ID Installer: BIESSE SOLUTION SRL (VG34VQP9G2)</PackageSigningKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Optimize>False</Optimize>
@@ -111,9 +113,9 @@
         </Command>
       </CustomCommands>
     </CustomCommands>
-    <EnableCodeSigning>False</EnableCodeSigning>
+    <EnableCodeSigning>true</EnableCodeSigning>
     <CreatePackage>False</CreatePackage>
-    <EnablePackageSigning>False</EnablePackageSigning>
+    <EnablePackageSigning>true</EnablePackageSigning>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <ConsolePause>False</ConsolePause>
     <UseSGen>false</UseSGen>
@@ -122,8 +124,8 @@
     <HttpClientHandler>HttpClientHandler</HttpClientHandler>
     <TlsProvider>Default</TlsProvider>
     <LinkMode>None</LinkMode>
-    <CodeSigningKey>Mac Developer</CodeSigningKey>
-    <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
+    <CodeSigningKey>Developer ID Application: BIESSE SOLUTION SRL (VG34VQP9G2)</CodeSigningKey>
+    <PackageSigningKey>Developer ID Installer: BIESSE SOLUTION SRL (VG34VQP9G2)</PackageSigningKey>
     <AOTMode>None</AOTMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMac|AnyCPU' ">

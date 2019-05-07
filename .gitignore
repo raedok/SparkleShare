@@ -39,4 +39,4 @@ SparkleShare.Windows.Bootloader/obj
 **/packages/*
 # except build/, which is used as an MSBuild target.
 !**/packages/build/
-
+SparkleShare.Mac.zip
