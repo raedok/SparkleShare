@@ -26,11 +26,15 @@
           <type>AfterBuild</type>
           <command>${ProjectDir}/postBuild.sh ${TargetDir}/${SolutionName}.app</command>
         </Command>
+        <Command>
+          <type>BeforeBuild</type>
+          <command>${ProjectDir}/preBuild.sh ${TargetDir}/${SolutionName}.app</command>
+        </Command>
       </CustomCommands>
     </CustomCommands>
-    <EnableCodeSigning>False</EnableCodeSigning>
+    <EnableCodeSigning>true</EnableCodeSigning>
     <CreatePackage>False</CreatePackage>
-    <EnablePackageSigning>False</EnablePackageSigning>
+    <EnablePackageSigning>true</EnablePackageSigning>
     <IncludeMonoRuntime>false</IncludeMonoRuntime>
     <ConsolePause>False</ConsolePause>
     <UseSGen>false</UseSGen>
@@ -40,6 +44,9 @@
     <TlsProvider>Default</TlsProvider>
     <LinkMode>None</LinkMode>
     <UseMSBuildEngine>True</UseMSBuildEngine>
+    <CodeSigningKey>Developer ID Application: BIESSE SOLUTION SRL (VG34VQP9G2)</CodeSigningKey>
+    <PackageSigningKey>Developer ID Installer: BIESSE SOLUTION SRL (VG34VQP9G2)</PackageSigningKey>
+    <AOTMode>None</AOTMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <Optimize>False</Optimize>
@@ -67,6 +74,7 @@
     <LinkMode>None</LinkMode>
     <HttpClientHandler>HttpClientHandler</HttpClientHandler>
     <TlsProvider>Default</TlsProvider>
+    <AOTMode>None</AOTMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseDist|AnyCPU' ">
     <Optimize>false</Optimize>
@@ -94,6 +102,9 @@
     <HttpClientHandler>HttpClientHandler</HttpClientHandler>
     <TlsProvider>Default</TlsProvider>
     <LinkMode>None</LinkMode>
+    <AOTMode>None</AOTMode>
+    <CodeSigningKey>Developer ID Application: BIESSE SOLUTION SRL (VG34VQP9G2)</CodeSigningKey>
+    <PackageSigningKey>Developer ID Installer: BIESSE SOLUTION SRL (VG34VQP9G2)</PackageSigningKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseMac|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -109,19 +120,20 @@
         </Command>
       </CustomCommands>
     </CustomCommands>
-    <EnableCodeSigning>False</EnableCodeSigning>
+    <EnableCodeSigning>true</EnableCodeSigning>
     <CreatePackage>False</CreatePackage>
-    <EnablePackageSigning>False</EnablePackageSigning>
-    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <EnablePackageSigning>true</EnablePackageSigning>
+    <ConsolePause>False</ConsolePause>
     <ConsolePause>False</ConsolePause>
     <UseSGen>false</UseSGen>
-    <UseRefCounting>false</UseRefCounting>
+    <Profiling>false</Profiling>
     <Profiling>false</Profiling>
     <HttpClientHandler>HttpClientHandler</HttpClientHandler>
     <TlsProvider>Default</TlsProvider>
     <LinkMode>None</LinkMode>
-    <CodeSigningKey>Mac Developer</CodeSigningKey>
-    <PackageSigningKey>3rd Party Mac Developer Installer</PackageSigningKey>
+    <CodeSigningKey>Developer ID Application: BIESSE SOLUTION SRL (VG34VQP9G2)</CodeSigningKey>
+    <PackageSigningKey>Developer ID Installer: BIESSE SOLUTION SRL (VG34VQP9G2)</PackageSigningKey>
+    <AOTMode>None</AOTMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugMac|AnyCPU' ">
     <Optimize>False</Optimize>
@@ -149,6 +161,7 @@
     <LinkMode>None</LinkMode>
     <HttpClientHandler>HttpClientHandler</HttpClientHandler>
     <TlsProvider>Default</TlsProvider>
+    <AOTMode>None</AOTMode>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
